@@ -2,6 +2,8 @@ require 'set'
 
 class Problem3
 
+    # @param [Array<Integer>] values
+    # @param [Integer] value
     def initialize(values, value)
         @values = values
         @value = value
@@ -28,13 +30,6 @@ class Problem3
     def answer
         first, second = find_pair_with_sum(@values, @value)
 
-        [@values.index { |element| element == first }, @values.index { |element| element == second }]
+        [@values.index(first), @values.index(second)]
     end
 end
-
-VALUES = [2, 11, 7, 15].freeze
-VALUE = 9.freeze
-
-problem_solver = Problem3.new(VALUES, VALUE)
-
-puts "Answer: #{problem_solver.answer}"

@@ -4,6 +4,7 @@ class Problem4
         @values = values
     end
 
+    # @return [Array<Integer>]
     def answer
 
         num = @values.length
@@ -24,9 +25,6 @@ class Problem4
             right_product *= @values[i+1]
             right_products[i] = right_product
         end
-
-        puts left_products.inspect
-        puts right_products.inspect
 
         answers = Array.new(num, 1)
 
