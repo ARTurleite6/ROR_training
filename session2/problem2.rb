@@ -1,7 +1,7 @@
 class FileSystem
   # @param [Array] file_tree
   def initialize(file_tree)
-    @file_tree = file_tree
+    @files = construct_tree(file_tree)
   end
 
   def total_number_of_files
@@ -21,18 +21,24 @@ class FileSystem
   # I made this function, so if i search for a folder, it returns all the files inside of it
   # @return [Array<String>]
   def find(file_name: "", extension: "")
+    @files.select do |elem|
+      elem.include?(file_name) and has_extension(elem, extension)
+    end
+  end
+
+  def construct_tree(file_tree)
     list_files = []
     operation = Proc.new do |elem|
-      if is_file?(elem) and elem.include?(file_name) and has_extension(elem, extension)
+      if is_file?(elem)
         list_files << "." + elem
       end
     end
-    traverse_folder(@file_tree, operation)
+    traverse_folder(file_tree, operation)
     list_files
   end
 
   def has_extension(file_name, ext)
-    _, extension = file_name.split('.')
+    _, extension = file_name[1..].split('.')
     !extension.nil? && extension.include?(ext)
   end
 
