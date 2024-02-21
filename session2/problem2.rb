@@ -24,11 +24,10 @@ class FileSystem
     list_files = []
     operation = Proc.new do |elem|
       if is_file?(elem) and elem.include?(file_name) and has_extension(elem, extension)
-        list_files << elem
+        list_files << "." + elem
       end
     end
     traverse_folder(@file_tree, operation)
-    puts list_files
     list_files
   end
 
@@ -37,17 +36,27 @@ class FileSystem
     !extension.nil? && extension.include?(ext)
   end
 
+  #@param [Array<String] arr
+  #@return [Array<String>]
+  def get_folder_path(arr)
+    arr.take_while do |elem|
+      !is_file?(elem)
+    end
+  end
+
   def traverse_folder(folder, operation, base_folder: "")
     return if folder.empty?
-    # puts folder.inspect
+
+    arr_path = get_folder_path(folder)
+    new_base_folder = base_folder + arr_path.join("/") + "/"
+    folder = folder[arr_path.length..]
+
     folder.each do |elem|
       case elem
       in Array => arr
-        new_base_folder = base_folder + "#{arr[0]}/" if arr.length >= 1 and !is_file?(arr[0])
-        traverse_folder(arr[1..], operation, base_folder: new_base_folder)
+        traverse_folder(arr, operation, base_folder: new_base_folder)
       else
-        puts "Elem: #{elem}"
-        operation.call(base_folder + elem)
+        operation.call(new_base_folder + elem)
       end
     end
   end
