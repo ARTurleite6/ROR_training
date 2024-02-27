@@ -3,12 +3,12 @@
 class Animal
   def initialize(hungry_level = 0)
     @hungry_level = hungry_level
-    puts "Initialize method in Animal"
+    puts 'Initialize method in Animal'
   end
 
   def eat(food_ammount)
     @hungry_level -= food_ammount
-    @hungry_level = 0 if @hungry_level < 0
+    @hungry_level = 0 if @hungry_level.negative?
   end
 end
 
@@ -22,7 +22,7 @@ module Domesticable
 
   def eat(food_ammount)
     @hungry_level -= food_ammount
-    @hungry_level = 0 if @hungry_level < 0
+    @hungry_level = 0 if @hungry_level.negative?
     puts "Owner #{owner} feeding animal #{@name}"
   end
 end

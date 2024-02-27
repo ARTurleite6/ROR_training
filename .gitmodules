@@ -1,0 +1,3 @@
+[submodule "bookshelf_ror"]
+	path = bookshelf
+	url = https://github.com/ARTurleite6/bookshelf_ror.git
